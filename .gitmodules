@@ -4,3 +4,12 @@
 [submodule "web3webdeploy"]
 	path = web3webdeploy
 	url = https://github.com/Plopmenz/web3webdeploy
+[submodule "lib/open-token"]
+	path = lib/open-token
+	url = https://github.com/Plopmenz/open-token
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
+[submodule "lib/openmesh-admin"]
+	path = lib/openmesh-admin
+	url = https://github.com/Plopmenz/openmesh-admin
