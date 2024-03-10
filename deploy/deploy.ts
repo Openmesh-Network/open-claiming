@@ -8,6 +8,7 @@ import { Ether } from "../web3webdeploy/lib/etherUnits";
 export interface OpenClaimingDeploymentSettings
   extends Omit<DeployInfo, "contract" | "args" | "salt"> {
   openTokenDeployment: OpenTokenDeployment;
+  forceRedeploy?: boolean;
 }
 
 export interface OpenClaimingDeployment {
@@ -19,6 +20,10 @@ export async function deploy(
   deployer: Deployer,
   settings?: OpenClaimingDeploymentSettings
 ): Promise<OpenClaimingDeployment> {
+  if (settings?.forceRedeploy !== undefined && !settings.forceRedeploy) {
+    return await deployer.loadDeployment({ deploymentName: "latest.json" });
+  }
+
   deployer.startContext("lib/open-token");
   const openTokenDeployment =
     settings?.openTokenDeployment ?? (await openTokenDeploy(deployer));
