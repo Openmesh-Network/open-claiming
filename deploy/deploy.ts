@@ -12,8 +12,7 @@ import {
   DeployNodesWithdrawClaimingSettings,
 } from "./internal/NodesWithdrawClaiming";
 
-export interface OpenClaimingDeploymentSettings
-  extends Omit<DeployInfo, "contract" | "args" | "salt"> {
+export interface OpenClaimingDeploymentSettings {
   openTokenDeployment: OpenTokenDeployment;
   verifiedContributorClaiming: Omit<
     DeployVerifiedContributorClaimingSettings,
