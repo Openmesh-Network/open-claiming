@@ -3,11 +3,23 @@ import {
   OpenTokenDeployment,
   deploy as openTokenDeploy,
 } from "../lib/open-token/deploy/deploy";
-import { Ether } from "../web3webdeploy/lib/etherUnits";
+import {
+  deployVerifiedContributorClaiming,
+  DeployVerifiedContributorClaimingSettings,
+} from "./internal/VerifiedContributorClaiming";
+import {
+  deployNodesWithdrawClaiming,
+  DeployNodesWithdrawClaimingSettings,
+} from "./internal/NodesWithdrawClaiming";
 
 export interface OpenClaimingDeploymentSettings
   extends Omit<DeployInfo, "contract" | "args" | "salt"> {
   openTokenDeployment: OpenTokenDeployment;
+  verifiedContributorClaiming: Omit<
+    DeployVerifiedContributorClaimingSettings,
+    "token"
+  >;
+  nodesWithdrawClaiming: Omit<DeployNodesWithdrawClaimingSettings, "token">;
   forceRedeploy?: boolean;
 }
 
@@ -29,36 +41,14 @@ export async function deploy(
     settings?.openTokenDeployment ?? (await openTokenDeploy(deployer));
   deployer.finishContext();
 
-  const second = 1;
-  const minute = 60 * second;
-  const hour = 60 * minute;
-  const day = 24 * hour;
-  const week = 7 * day;
-
-  const ovcClaiming = await deployer.deploy({
-    id: "VerifiedContribitorRankingClaiming",
-    contract: "OpenClaiming",
-    args: [
-      openTokenDeployment.openToken,
-      Ether(100_000), // 0.01% of total supply
-      4 * week,
-      "0xaF7E68bCb2Fc7295492A00177f14F59B92814e70",
-    ],
-    salt: "OVC",
-    ...settings,
+  const ovcClaiming = await deployVerifiedContributorClaiming(deployer, {
+    token: openTokenDeployment.openToken,
+    ...(settings?.verifiedContributorClaiming ?? {}),
   });
 
-  const nodeClaiming = await deployer.deploy({
-    id: "NodesWithdrawClaiming",
-    contract: "OpenClaiming",
-    args: [
-      openTokenDeployment.openToken,
-      Ether(10_000_000), // 1% of total supply
-      1 * week,
-      "0xaF7E68bCb2Fc7295492A00177f14F59B92814e70",
-    ],
-    salt: "NODE",
-    ...settings,
+  const nodeClaiming = await deployNodesWithdrawClaiming(deployer, {
+    token: openTokenDeployment.openToken,
+    ...(settings?.verifiedContributorClaiming ?? {}),
   });
 
   const deployment = {
