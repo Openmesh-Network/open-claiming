@@ -51,8 +51,8 @@ export async function deploy(
   });
 
   const deployment = {
-    ovcClaiming: ovcClaiming.address,
-    nodeClaiming: nodeClaiming.address,
+    ovcClaiming: ovcClaiming,
+    nodeClaiming: nodeClaiming,
   };
   await deployer.saveDeployment({
     deploymentName: "latest.json",
