@@ -47,7 +47,7 @@ export async function deploy(
 
   const nodeClaiming = await deployNodesWithdrawClaiming(deployer, {
     token: openTokenDeployment.openToken,
-    ...(settings?.verifiedContributorClaiming ?? {}),
+    ...(settings?.nodesWithdrawClaiming ?? {}),
   });
 
   const deployment = {
