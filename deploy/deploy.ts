@@ -32,7 +32,12 @@ export async function deploy(
   settings?: OpenClaimingDeploymentSettings
 ): Promise<OpenClaimingDeployment> {
   if (settings?.forceRedeploy !== undefined && !settings.forceRedeploy) {
-    return await deployer.loadDeployment({ deploymentName: "latest.json" });
+    const existingDeployment = await deployer.loadDeployment({
+      deploymentName: "latest.json",
+    });
+    if (existingDeployment !== undefined) {
+      return existingDeployment;
+    }
   }
 
   deployer.startContext("lib/open-token");
