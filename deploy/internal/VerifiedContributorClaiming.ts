@@ -18,11 +18,11 @@ export async function deployVerifiedContributorClaiming(
       contract: "OpenClaiming",
       args: [
         settings.token,
-        Ether(10_000_000), // 1% of total supply
+        Ether(1_000_000), // 0.1% of total supply
         1 * week,
-        "0x8B4a225774EDdAF9C33f6b961Db832228c770b21",
+        "0xf2Bb57E104Bc9A8B398A6b47E3579389798b273a",
       ],
-      salt: "NODE",
+      salt: "OVC",
       ...settings,
     })
     .then((deployment) => deployment.address);

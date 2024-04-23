@@ -19,10 +19,10 @@ export async function deployNodesWithdrawClaiming(
       args: [
         settings.token,
         Ether(1_000_000), // 0.1% of total supply
-        4 * week,
-        "0x8B4a225774EDdAF9C33f6b961Db832228c770b21",
+        1 * week,
+        "0x4EfafD64b32b87a221DA50a5A7E54E5cBce00b6E",
       ],
-      salt: "OVC",
+      salt: "NODE",
       ...settings,
     })
     .then((deployment) => deployment.address);
