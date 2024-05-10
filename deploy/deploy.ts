@@ -55,7 +55,7 @@ export async function deploy(
     ...(settings?.nodesWithdrawClaiming ?? {}),
   });
 
-  const deployment = {
+  const deployment: OpenClaimingDeployment = {
     ovcClaiming: ovcClaiming,
     nodeClaiming: nodeClaiming,
   };
